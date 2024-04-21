@@ -1,0 +1,28 @@
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Введите строку, содержащую IPV4");
+        String ipv4 = scanner.nextLine();
+        Pattern p = Pattern.compile("\\b(25[^0-5]\\.|2[0-4]\\d\\.|1\\d\\d\\.|\\d\\d?\\.){3}(25[0-5]|2[0-4]\\d|1\\d\\d|\\d\\d?)\\b");
+        Matcher matcher = p.matcher(ipv4);
+        if (matcher.find()) {
+            try {
+                FileWriter writer = new FileWriter("ip_addresses.txt");
+                writer.write(matcher.group() + "\n");
+                writer.close();
+                System.out.println("Данные успешно записаны в файл ip_addresses.txt");
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        else{
+            System.out.println ("IPv4 не найден!");
+        }
+    }
+}
