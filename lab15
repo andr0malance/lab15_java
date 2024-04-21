@@ -11,18 +11,23 @@ public class Main {
         String ipv4 = scanner.nextLine();
         Pattern p = Pattern.compile("\\b(25[^0-5]\\.|2[0-4]\\d\\.|1\\d\\d\\.|\\d\\d?\\.){3}(25[0-5]|2[0-4]\\d|1\\d\\d|\\d\\d?)\\b");
         Matcher matcher = p.matcher(ipv4);
-        if (matcher.find()) {
+        int kolvo = 0;
+
             try {
                 FileWriter writer = new FileWriter("ip_addresses.txt");
-                writer.write(matcher.group() + "\n");
+                while (matcher.find()) {
+                    writer.write(matcher.group(0) + "\n");
+                    kolvo++;
+                }
                 writer.close();
-                System.out.println("Данные успешно записаны в файл ip_addresses.txt");
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
-        }
-        else{
-            System.out.println ("IPv4 не найден!");
-        }
+            if (kolvo == 0) {
+                System.out.println("IPV4 не найден :(");
+            }
+            else{
+                System.out.println("Найденный(ые) ipv4 адрес(а) записаны в файл");
+            }
     }
 }
