@@ -9,25 +9,25 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введите строку, содержащую IPV4");
         String ipv4 = scanner.nextLine();
-        Pattern p = Pattern.compile("\\b(25[^0-5]\\.|2[0-4]\\d\\.|1\\d\\d\\.|\\d\\d?\\.){3}(25[0-5]|2[0-4]\\d|1\\d\\d|\\d\\d?)\\b");
+        Pattern p = Pattern.compile("\\b(\\d\\.|\\d\\d\\.|1\\d\\d\\.|2[0-4]\\d\\.|25[0-5]\\.){3}(\\d|\\d\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\b");
         Matcher matcher = p.matcher(ipv4);
         int kolvo = 0;
 
-            try {
-                FileWriter writer = new FileWriter("ip_addresses.txt");
-                while (matcher.find()) {
-                    writer.write(matcher.group(0) + "\n");
-                    kolvo++;
-                }
-                writer.close();
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
+        try {
+            FileWriter writer = new FileWriter("ip_addresses.txt");
+            while (matcher.find()) {
+                writer.write(matcher.group() + "\n");
+                kolvo++;
             }
-            if (kolvo == 0) {
-                System.out.println("IPV4 не найден :(");
-            }
-            else{
-                System.out.println("Найденный(ые) ipv4 адрес(а) записаны в файл");
-            }
+            writer.close();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        if (kolvo == 0) {
+            System.out.println("IPV4 не найден :(");
+        }
+        else{
+            System.out.println("Найденный(ые) ipv4 адрес(а) записаны в файл");
+        }
     }
 }
